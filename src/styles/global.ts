@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -20,5 +20,12 @@ export const GlobalStyle = createGlobalStyle`
   body, input, textarea {
     ${(props) => props.theme.mixins.textM}
   }
+`
 
+export const AppContainer = styled.div`
+  width: 100%;
+  max-width: 920px;
+
+  margin: 4rem auto 2rem;
+  padding: 0 1.25rem;
 `

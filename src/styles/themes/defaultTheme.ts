@@ -26,10 +26,10 @@ export const defaultTheme = {
       font-weight: 800;
     `,
     titleM: css`
-      font-family: 'Open Sans', sans-serif;
-      font-size: 1.5rem;
-      line-height: 130%;
-      font-weight: 800;
+      font-family: 'Open Sans', sans-serif !important;
+      font-size: 1.5rem !important;
+      line-height: 130% !important;
+      font-weight: 800 !important;
     `,
     textL: css`
       font-family: Poppins, sans-serif;
