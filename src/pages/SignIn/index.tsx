@@ -99,7 +99,7 @@ export function SignIn() {
           </form>
         </SignInContainer>
       ) : (
-        <Navigate to="/confirmation" />
+        <Navigate to="/confirmation" replace />
       )}
     </>
   )
