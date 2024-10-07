@@ -23,7 +23,6 @@ export function transformScheduleData(data: any): SchedulesData[] {
 
     for (const localId in locais) {
       const datas = locais[localId]
-      console.log(localId)
 
       for (const date in datas) {
         const horarios = datas[date]

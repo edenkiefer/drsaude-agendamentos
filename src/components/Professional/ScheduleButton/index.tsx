@@ -45,7 +45,6 @@ export function ScheduleButton({
     setCheckedId(id)
     setProfessionalId(professionalId)
     setProfessionalName(professionalName)
-    console.log(localId)
     setLocalId(localId)
     setHour(children)
     setDate(date)

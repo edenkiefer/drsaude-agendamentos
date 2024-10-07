@@ -32,13 +32,11 @@ export const getProcedures = async (
 }
 
 export const getProcedureById = async (id: string): Promise<Procedure> => {
-  console.log(id)
   const procedureResponse = await api.get('/procedures/list', {
     params: {
       procedimento_id: id,
     },
   })
-  console.log(procedureResponse)
   const procedureData = procedureResponse.data.content[0]
 
   return {

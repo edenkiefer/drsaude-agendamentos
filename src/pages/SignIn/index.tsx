@@ -67,7 +67,6 @@ export function SignIn() {
   }, [setPatient])
 
   useEffect(() => {
-    console.log(localStorage.getItem('Auth:user'))
     setStatusBar(1)
     fetchPatient()
   }, [setStatusBar, fetchPatient])

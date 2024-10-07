@@ -1,15 +1,3 @@
-/* {
-  "local_id": 0,
-	"paciente_id": 5,
-	"profissional_id": 10,
-	"especialidade_id": 95,
-	"procedimento_id": 5,
-	"data": "08-08-2018",
-	"horario": "15:00:00",
-	"valor": 550,
-  "plano": 0,
-} */
-
 import { format, formatISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
@@ -47,17 +35,6 @@ export const createNewAppointment = async (
     locale: ptBR,
   })
 
-  console.log({
-    local_id: localId,
-    paciente_id: pacienteId,
-    profissional_id: profissionalId,
-    especialidade_id: especialidadeId,
-    procedimento_id: procedimentoId,
-    data: formatedDate,
-    horario: formatedHorario,
-    valor,
-    plano,
-  })
   const appointment = await api.post('/appoints/new-appoint', {
     local_id: localId,
     paciente_id: pacienteId,

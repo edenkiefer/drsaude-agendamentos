@@ -63,9 +63,8 @@ export function Payment() {
   const createAppointment = useCallback(async () => {
     try {
       const patientId = localStorage.getItem('Auth:user')
-      console.log(localId)
       if (localId && patientId && date && hour) {
-        const appointment = await createNewAppointment({
+        await createNewAppointment({
           localId: Number(localId),
           pacienteId: Number(patientId),
           profissionalId: Number(professionalId),
@@ -76,7 +75,6 @@ export function Payment() {
           valor: Number(price),
           plano: 0,
         })
-        console.log(appointment)
       }
     } catch (error) {
       console.log(error)
