@@ -21,12 +21,24 @@ export function Confirmation() {
     hour,
     unity,
     specialtie,
+    procedure,
     patient,
   } = useContext(AppointmentsContext)
 
   useEffect(() => {
     setStatusBar(2)
   }, [])
+
+  const formatCpf = (value: string) => {
+    value = value.replace(/\D/g, '')
+
+    if (value.length <= 11) {
+      value = value.replace(/(\d{3})(\d)/, '$1.$2')
+      value = value.replace(/(\d{3})(\d)/, '$1.$2')
+      value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+    }
+    return value
+  }
 
   return (
     <ConfirmationContainer>
@@ -43,7 +55,9 @@ export function Confirmation() {
           <Note size={32} />
           <div>
             <strong>Procedimento</strong>
-            <p>{specialtie?.value}</p>
+            <p>
+              {specialtie?.value} • {procedure?.value}{' '}
+            </p>
           </div>
         </span>
         <span>
@@ -67,7 +81,7 @@ export function Confirmation() {
           <div>
             <strong>Paciente</strong>
             <p>{patient.name}</p>
-            <p>{patient.cpf}</p>
+            <p>{formatCpf(patient.cpf)}</p>
           </div>
         </span>
         <strong>

@@ -24,6 +24,12 @@ export const DataContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+    }
   }
 
   p {
