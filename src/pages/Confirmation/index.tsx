@@ -5,7 +5,8 @@ import {
   Stethoscope,
   User,
 } from '@phosphor-icons/react'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 import { Note } from 'phosphor-react'
 import { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
@@ -65,7 +66,10 @@ export function Confirmation() {
           <div>
             <strong>Data</strong>
             <p>
-              {format(new Date(date || new Date()), 'dd/MM/yyyy')} às {hour}
+              {format(parseISO(date || ''), 'dd/MM/yyyy', {
+                locale: ptBR,
+              })}{' '}
+              às {hour}
             </p>
           </div>
         </span>

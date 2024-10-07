@@ -1,4 +1,4 @@
-import { format, formatISO } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
 import { api } from '../axios'
@@ -31,7 +31,7 @@ export const createNewAppointment = async (
   } = newAppointment
 
   const formatedHorario = horario + ':00'
-  const formatedDate = format(formatISO(data), 'dd-MM-yyyy', {
+  const formatedDate = format(parseISO(data), 'dd-MM-yyyy', {
     locale: ptBR,
   })
 
