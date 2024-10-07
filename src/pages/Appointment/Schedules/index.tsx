@@ -9,20 +9,24 @@ import { Professional } from '../../../components/Professional'
 import { AppointmentsContext } from '../../../contexts/AppointmentsContext'
 import { DateContainer, SchedulesContainer } from './styles'
 
+export interface DateRangeProps {
+  startDate?: Date
+  endDate?: Date
+  key?: string
+}
+
 interface SchedulesProps {
-  dataStart: string
-  dataEnd: string
+  dateRange?: DateRangeProps
   checkedScheduleButtonId: string
   setCheckedScheduleButtonId: (id: string) => void
 }
 
 function Schedules({
-  dataStart,
-  dataEnd,
+  dateRange,
   checkedScheduleButtonId,
   setCheckedScheduleButtonId,
 }: SchedulesProps) {
-  const { unity, specialtie } = useContext(AppointmentsContext)
+  const { unity, specialtie, procedure } = useContext(AppointmentsContext)
 
   const [schedules, setSchedules] = useState<SchedulesData[]>([])
 
@@ -32,8 +36,20 @@ function Schedules({
       unity?.id !== '' &&
       specialtie &&
       specialtie.id !== '' &&
-      specialtie.id !== '0'
+      specialtie.id !== '0' &&
+      procedure &&
+      procedure.id !== '' &&
+      procedure.id !== '0' &&
+      dateRange &&
+      dateRange.startDate &&
+      dateRange.endDate
     ) {
+      const dataStart = format(dateRange.startDate, 'dd-MM-yyyy', {
+        locale: ptBR,
+      })
+      const dataEnd = format(dateRange.endDate, 'dd-MM-yyyy', {
+        locale: ptBR,
+      })
       const schedulesData = await getSchedules(
         unity?.id,
         specialtie?.id,
@@ -42,11 +58,11 @@ function Schedules({
       )
       setSchedules(schedulesData)
     }
-  }, [dataEnd, dataStart, specialtie, unity])
+  }, [dateRange, specialtie, unity, procedure])
 
   useEffect(() => {
     fetchSchedulesData()
-  }, [dataEnd, dataStart, specialtie, unity])
+  }, [dateRange, specialtie, unity, procedure])
 
   return (
     <>

@@ -14,6 +14,20 @@ export const AppointmentContainer = styled.div`
     flex-direction: column;
     gap: 1rem;
   }
+
+  div.rdrDateRangeWrapper {
+    border: 1px solid ${(props) => props.theme.colors['gray-400']};
+    border-radius: 6px;
+    ${(props) => props.theme.mixins.textS}
+  }
+`
+
+export const DateRangeContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
 `
 
 export const ContinueButtonContainer = styled.div`
