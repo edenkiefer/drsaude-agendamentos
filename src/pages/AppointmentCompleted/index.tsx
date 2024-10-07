@@ -1,4 +1,4 @@
-import { format, formatISO } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { useContext, useEffect } from 'react'
 
@@ -21,10 +21,9 @@ export function AppointmentCompleted() {
       <p>
         Sua consulta será às <strong>{hour}</strong> do dia{' '}
         <strong>
-          {date &&
-            format(formatISO(date), 'dd/MM/yyyy', {
-              locale: ptBR,
-            })}
+          {format(parseISO(date || ''), 'dd/MM/yyyy', {
+            locale: ptBR,
+          })}
         </strong>
         .
       </p>

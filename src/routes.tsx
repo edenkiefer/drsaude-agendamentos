@@ -4,6 +4,7 @@ import App from './App'
 import Appointment from './pages/Appointment'
 import { AppointmentCompleted } from './pages/AppointmentCompleted'
 import { Confirmation } from './pages/Confirmation'
+import Patient from './pages/Patient'
 import { PatientRegistration } from './pages/PatientRegistration'
 import { Payment } from './pages/Payment'
 import { SignIn } from './pages/SignIn'
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: '/appointment-completed',
         element: <AppointmentCompleted />,
+      },
+      {
+        path: '/patient',
+        element: <Patient />,
       },
     ],
   },

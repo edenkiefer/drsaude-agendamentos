@@ -1,6 +1,6 @@
 import { format, parse } from 'date-fns'
 
-import { Patient } from '../../@types/models'
+import { PatientData } from '../../@types/models'
 import { api } from '../axios'
 
 interface PatientResponse {
@@ -15,7 +15,7 @@ interface PatientResponse {
 export const signIn = async (
   cpf: string,
   birthDate: string,
-): Promise<Patient> => {
+): Promise<PatientData> => {
   cpf = cpf.replace('-', '').replace('.', '').replace('.', '')
   const patientData = await api.get('/patient/search', {
     params: {
@@ -53,7 +53,7 @@ export const signIn = async (
   }
 }
 
-export const getPatientById = async (id: string): Promise<Patient> => {
+export const getPatientById = async (id: string): Promise<PatientData> => {
   const patientData = await api.get('/patient/search', {
     params: {
       paciente_id: id,

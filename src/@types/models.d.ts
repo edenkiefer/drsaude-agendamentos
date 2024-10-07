@@ -20,7 +20,7 @@ export interface Appointment {
   price?: number
 }
 
-export interface Patient {
+export interface PatientData {
   id: string
   name: string
   cpf: string
