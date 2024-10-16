@@ -8,10 +8,10 @@ export function StatusBar() {
 
   return (
     <StatusBarContainer>
-      <StatusBarProgressContaienr active={statusBar >= 1 && true} />
-      <StatusBarProgressContaienr active={statusBar >= 2 && true} />
-      <StatusBarProgressContaienr active={statusBar >= 3 && true} />
-      <StatusBarProgressContaienr active={statusBar >= 4 && true} />
+      <StatusBarProgressContaienr active={statusBar >= 1} />
+      <StatusBarProgressContaienr active={statusBar >= 2} />
+      <StatusBarProgressContaienr active={statusBar >= 3} />
+      <StatusBarProgressContaienr active={statusBar >= 4} />
     </StatusBarContainer>
   )
 }

@@ -8,14 +8,14 @@ import { api } from '../axios'
 
 export const getSchedules = async (
   unityId: string,
-  specialtieId: string,
+  procedureId: string,
   dataStart: string,
   dataEnd: string,
 ): Promise<SchedulesData[]> => {
   const schedulesResponse = await api.get(`/appoints/available-schedule`, {
     params: {
-      tipo: 'E',
-      especialidade_id: specialtieId,
+      tipo: 'P',
+      procedimento_id: procedureId,
       unidade_id: unityId,
       data_start: dataStart,
       data_end: dataEnd,

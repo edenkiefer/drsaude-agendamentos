@@ -8,7 +8,8 @@ import { AppointmentsContext } from '../../contexts/AppointmentsContext'
 import { SignInContainer } from './styles'
 
 export function SignIn() {
-  const { setStatusBar, setPatient } = useContext(AppointmentsContext)
+  const { setStatusBar, setPatient, setHeaderTitle } =
+    useContext(AppointmentsContext)
   const navigate = useNavigate()
 
   const [cpf, setCpf] = useState('')
@@ -68,14 +69,14 @@ export function SignIn() {
 
   useEffect(() => {
     setStatusBar(1)
+    setHeaderTitle('Login')
     fetchPatient()
-  }, [setStatusBar, fetchPatient])
+  }, [setStatusBar, fetchPatient, setHeaderTitle])
 
   return (
     <>
       {localStorage.getItem('Auth:user') === null ? (
         <SignInContainer>
-          <h1>Login</h1>
           <form onSubmit={handleSignIn}>
             <Input
               label="CPF"

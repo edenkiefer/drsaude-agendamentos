@@ -5,10 +5,6 @@ export const AppointmentContainer = styled.div`
   flex-direction: column;
   gap: 1rem;
 
-  h1 {
-    ${(props) => props.theme.mixins.titleL}
-  }
-
   form {
     display: flex;
     flex-direction: column;
@@ -40,4 +36,13 @@ export const ContinueButtonContainer = styled.div`
   padding: 0.5rem;
 
   align-self: center;
+`
+
+export const DatePicker = styled.div`
+  display: flex;
+
+  button {
+    padding: 1.5rem 1rem;
+    width: 100%;
+  }
 `

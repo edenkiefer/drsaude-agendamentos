@@ -20,11 +20,21 @@ export const getProcedures = async (
   })
 
   await proceduresResponse.data.content.forEach(
-    (procedure: { procedimento_id: string; nome: string }) => {
-      procedures.push({
-        id: procedure.procedimento_id,
-        value: procedure.nome,
-      })
+    (procedure: {
+      procedimento_id: string
+      nome: string
+      especialidade_id: number[]
+    }) => {
+      if (
+        procedure.especialidade_id &&
+        procedure.especialidade_id.length > 0 &&
+        procedure.especialidade_id.includes(Number(specialtieId))
+      ) {
+        procedures.push({
+          id: procedure.procedimento_id,
+          value: procedure.nome,
+        })
+      }
     },
   )
 

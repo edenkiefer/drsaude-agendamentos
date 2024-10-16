@@ -1,37 +1,27 @@
 import {
   ArrowCircleRight,
   CalendarDots,
-  CaretLeft,
-  List,
   UserCircle,
 } from '@phosphor-icons/react'
 import { useContext, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-import logo from '../../assets/logo.png'
 import { AppointmentsContext } from '../../contexts/AppointmentsContext'
 import { StatusBar } from './StatusBar'
-import { HeaderContainer, Sidebar, SidebarItem } from './styles'
+import { Sidebar, SidebarItem } from './styles'
 
 export function Header() {
-  const { statusBar, setStatusBar } = useContext(AppointmentsContext)
+  const { statusBar } = useContext(AppointmentsContext)
 
   const [isOpen, setIsOpen] = useState(false)
 
-  const navigate = useNavigate()
-
-  const handleNavigate = () => {
-    setStatusBar(statusBar - 1)
-    navigate(-1)
-  }
-
   return (
     <>
-      <HeaderContainer>
+      {/* <HeaderContainer>
         <div className="button">
           {statusBar !== 0 && statusBar !== 4 && (
             <button onClick={handleNavigate}>
-              <CaretLeft size={40} />
+              <CaretLeft size={40} /> Voltar
             </button>
           )}
         </div>
@@ -43,9 +33,9 @@ export function Header() {
             <List size={40} />
           </button>
         </div>
-      </HeaderContainer>
+      </HeaderContainer> */}
       {statusBar !== -1 && <StatusBar />}
-      <Sidebar isOpen={isOpen}>
+      <Sidebar open={isOpen}>
         <span>
           <button onClick={() => setIsOpen(false)}>
             <ArrowCircleRight size={40} />

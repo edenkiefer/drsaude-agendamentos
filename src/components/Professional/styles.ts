@@ -41,7 +41,7 @@ export const ProfessionalInfo = styled.div`
     width: 100px;
     height: auto;
     border-radius: 6px;
-    object-fit: cover;
+    object-fit: contain;
   }
 
   span {

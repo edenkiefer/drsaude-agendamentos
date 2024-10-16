@@ -7,15 +7,22 @@ import { AppointmentsContext } from '../../contexts/AppointmentsContext'
 import { AppointmentCompletedContainer } from './styles'
 
 export function AppointmentCompleted() {
-  const { setStatusBar, professionalId, hour, date, unity, price } =
-    useContext(AppointmentsContext)
+  const {
+    setStatusBar,
+    setHeaderTitle,
+    professionalId,
+    hour,
+    date,
+    unity,
+    price,
+  } = useContext(AppointmentsContext)
 
   useEffect(() => {
     setStatusBar(4)
-  }, [setStatusBar])
+    setHeaderTitle('Agendamento concluído')
+  }, [setStatusBar, setHeaderTitle])
   return (
     <AppointmentCompletedContainer>
-      <h1>Agendamento Concluído</h1>
       <p>O seu agendamento foi realizado, o seu médico(a) será:</p>
       <Professional id={professionalId || ''} data="" localId="" />
       <p>

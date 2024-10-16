@@ -13,5 +13,5 @@ interface StatusBarProgressContaienrProps {
 export const StatusBarProgressContaienr = styled.div<StatusBarProgressContaienrProps>`
   width: 100%;
   height: 10px;
-  background: ${(props) => (props.active ? '#90EE90' : '#D3D3D3')};
+  background: ${(props) => (props.active === true ? '#90EE90' : '#D3D3D3')};
 `

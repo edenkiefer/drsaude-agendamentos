@@ -12,6 +12,10 @@ export const HeaderContainer = styled.header`
     background: none;
     border: none;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    ${(props) => props.theme.mixins.textL}
   }
 
   a {
@@ -46,7 +50,7 @@ export const HeaderContainer = styled.header`
 `
 
 interface SidebarProps {
-  isOpen: boolean
+  open: boolean
 }
 
 export const Sidebar = styled.div<SidebarProps>`

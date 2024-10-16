@@ -9,7 +9,6 @@ import { format, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { Note } from 'phosphor-react'
 import { useContext, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 
 import { AppointmentsContext } from '../../contexts/AppointmentsContext'
 import { ConfirmationContainer, ContinueButton, DataContainer } from './styles'
@@ -17,6 +16,7 @@ import { ConfirmationContainer, ContinueButton, DataContainer } from './styles'
 export function Confirmation() {
   const {
     setStatusBar,
+    setHeaderTitle,
     professionalName,
     date,
     hour,
@@ -28,6 +28,7 @@ export function Confirmation() {
 
   useEffect(() => {
     setStatusBar(2)
+    setHeaderTitle('Confirme os dados da consulta, por favor')
   }, [])
 
   const formatCpf = (value: string) => {
@@ -43,7 +44,6 @@ export function Confirmation() {
 
   return (
     <ConfirmationContainer>
-      <h1>Confirme os dados da consulta, por favor</h1>
       <DataContainer>
         <span>
           <Stethoscope size={32} />
@@ -88,14 +88,11 @@ export function Confirmation() {
             <p>{formatCpf(patient.cpf)}</p>
           </div>
         </span>
-        <strong>
-          Se estiver tudo de acordo continue para o pagamento. Caso queira
-          alterar o horário, unidade ou especialidade por favor refaça o
-          agendamento, pois essas informações estão totalmente atreladas.{' '}
-          <Link to="/">Clique aqui</Link> caso queira refazer o agendamento.
-        </strong>
       </DataContainer>
       <ContinueButton to="/payment">Continuar para o pagamento</ContinueButton>
+      <ContinueButton to="/">
+        Deseja alterar os dados do agendamento ?
+      </ContinueButton>
     </ConfirmationContainer>
   )
 }

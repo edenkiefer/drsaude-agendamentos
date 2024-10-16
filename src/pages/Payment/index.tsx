@@ -18,6 +18,7 @@ export function Payment() {
     hour,
     price,
     setStatusBar,
+    setHeaderTitle,
   } = useContext(AppointmentsContext)
 
   const navigate = useNavigate()
@@ -31,6 +32,7 @@ export function Payment() {
 
   useEffect(() => {
     setStatusBar(3)
+    setHeaderTitle('Pagamento')
   }, [])
 
   const handlePaymentTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -91,8 +93,6 @@ export function Payment() {
 
   return (
     <Container>
-      <h1>Pagamento</h1>
-
       <form onSubmit={handleCreateAppointment}>
         <SelectInput
           label="Forma de pagamento"
@@ -101,6 +101,10 @@ export function Payment() {
           value={paymentType}
           onChange={handlePaymentTypeChange}
           data={[
+            {
+              id: '2',
+              value: 'Cartão de Crédito',
+            },
             {
               id: '3',
               value: 'Na unidade',

@@ -1,12 +1,14 @@
 import { createContext, ReactNode, useState } from 'react'
 
-import { Appointment, BaseOption, Patient } from '../@types/models'
+import { Appointment, BaseOption, PatientData } from '../@types/models'
 
 interface AppointmentsContextType extends Appointment {
   statusBar: number
   professionalName: string
-  patient: Patient
+  patient: PatientData
+  headerTitle: string
 
+  setHeaderTitle: React.Dispatch<React.SetStateAction<string>>
   setUnity: React.Dispatch<React.SetStateAction<BaseOption>>
   setProfessionalName: React.Dispatch<React.SetStateAction<string>>
   setSpecialtie: React.Dispatch<React.SetStateAction<BaseOption>>
@@ -15,7 +17,7 @@ interface AppointmentsContextType extends Appointment {
   setLocalId: React.Dispatch<React.SetStateAction<string>>
   setDate: React.Dispatch<React.SetStateAction<string>>
   setHour: React.Dispatch<React.SetStateAction<string>>
-  setPatient: React.Dispatch<React.SetStateAction<Patient>>
+  setPatient: React.Dispatch<React.SetStateAction<PatientData>>
   setPrice: React.Dispatch<React.SetStateAction<number>>
 
   setStatusBar: React.Dispatch<React.SetStateAction<number>>
@@ -45,7 +47,7 @@ function AppointmentsContextProvider({
     value: '',
   })
 
-  const [patient, setPatient] = useState<Patient>({
+  const [patient, setPatient] = useState<PatientData>({
     id: '',
     cpf: '',
     name: '',
@@ -61,12 +63,15 @@ function AppointmentsContextProvider({
 
   const [statusBar, setStatusBar] = useState(0)
 
+  const [headerTitle, setHeaderTitle] = useState('')
+
   return (
     <AppointmentsContext.Provider
       value={{
         specialtie,
         unity,
         procedure,
+        headerTitle,
         date,
         hour,
         professionalId,
@@ -78,6 +83,7 @@ function AppointmentsContextProvider({
         patient,
         price,
 
+        setHeaderTitle,
         setLocalId,
         setProfessionalId,
         setProfessionalName,

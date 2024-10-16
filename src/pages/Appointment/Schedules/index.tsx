@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { format, parseISO } from 'date-fns'
+import { addDays, format, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
@@ -7,7 +7,7 @@ import { SchedulesData } from '../../../@types/models'
 import { getSchedules } from '../../../api/services/schedulesService'
 import { Professional } from '../../../components/Professional'
 import { AppointmentsContext } from '../../../contexts/AppointmentsContext'
-import { DateContainer, SchedulesContainer } from './styles'
+import { DateContainer, LoadButton, SchedulesContainer } from './styles'
 
 export interface DateRangeProps {
   startDate?: Date
@@ -16,53 +16,59 @@ export interface DateRangeProps {
 }
 
 interface SchedulesProps {
-  dateRange?: DateRangeProps
   checkedScheduleButtonId: string
   setCheckedScheduleButtonId: (id: string) => void
 }
 
 function Schedules({
-  dateRange,
   checkedScheduleButtonId,
   setCheckedScheduleButtonId,
 }: SchedulesProps) {
   const { unity, specialtie, procedure } = useContext(AppointmentsContext)
 
   const [schedules, setSchedules] = useState<SchedulesData[]>([])
+  const [loadButtonEnabled, setLoadButtonEnabled] = useState(true)
 
-  const fetchSchedulesData = useCallback(async () => {
-    if (
-      unity &&
-      unity?.id !== '' &&
-      specialtie &&
-      specialtie.id !== '' &&
-      specialtie.id !== '0' &&
-      procedure &&
-      procedure.id !== '' &&
-      procedure.id !== '0' &&
-      dateRange &&
-      dateRange.startDate &&
-      dateRange.endDate
-    ) {
-      const dataStart = format(dateRange.startDate, 'dd-MM-yyyy', {
-        locale: ptBR,
-      })
-      const dataEnd = format(dateRange.endDate, 'dd-MM-yyyy', {
-        locale: ptBR,
-      })
-      const schedulesData = await getSchedules(
-        unity?.id,
-        specialtie?.id,
-        dataStart,
-        dataEnd,
-      )
-      setSchedules(schedulesData)
-    }
-  }, [dateRange, specialtie, unity, procedure])
+  const fetchSchedulesData = useCallback(
+    async (startDate: Date, endDate: Date) => {
+      if (
+        unity &&
+        unity?.id !== '' &&
+        specialtie &&
+        specialtie.id !== '' &&
+        specialtie.id !== '0' &&
+        procedure &&
+        procedure.id !== '' &&
+        procedure.id !== '0'
+      ) {
+        const formatedStartDate = format(startDate, 'dd-MM-yyyy', {
+          locale: ptBR,
+        })
+        const formatedEndDate = format(endDate, 'dd-MM-yyyy', {
+          locale: ptBR,
+        })
+
+        const schedulesData = await getSchedules(
+          unity.id,
+          procedure.id,
+          formatedStartDate,
+          formatedEndDate,
+        )
+        setSchedules(schedulesData)
+      }
+    },
+    [specialtie, unity, procedure],
+  )
 
   useEffect(() => {
-    fetchSchedulesData()
-  }, [dateRange, specialtie, unity, procedure])
+    fetchSchedulesData(new Date(), addDays(new Date(), 30))
+    setLoadButtonEnabled(true)
+  }, [specialtie, unity, procedure])
+
+  const loadMoreSchedules = async () => {
+    fetchSchedulesData(new Date(), addDays(new Date(), 60))
+    setLoadButtonEnabled(false)
+  }
 
   return (
     <>
@@ -96,6 +102,11 @@ function Schedules({
               </DateContainer>
             )
           })}
+          {loadButtonEnabled ? (
+            <LoadButton onClick={loadMoreSchedules}>
+              Carregar mais horários
+            </LoadButton>
+          ) : null}
         </SchedulesContainer>
       ) : null}
     </>

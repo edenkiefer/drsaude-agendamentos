@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { addDays } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
+
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { DateRange, RangeKeyDict } from 'react-date-range'
 
 import { BaseOption } from '../../@types/models'
 import {
@@ -14,12 +12,8 @@ import { getUnitys } from '../../api/services/unitysService'
 import { LinkButton } from '../../components/LinkButton'
 import { SelectInput } from '../../components/SelectInput'
 import { AppointmentsContext } from '../../contexts/AppointmentsContext'
-import Schedules, { DateRangeProps } from './Schedules'
-import {
-  AppointmentContainer,
-  ContinueButtonContainer,
-  DateRangeContainer,
-} from './styles'
+import Schedules from './Schedules'
+import { AppointmentContainer, ContinueButtonContainer } from './styles'
 
 function Appointment() {
   const {
@@ -31,17 +25,11 @@ function Appointment() {
     setProcedure,
     setStatusBar,
     setPrice,
+    setHeaderTitle,
   } = useContext(AppointmentsContext)
 
   const [checkedScheduleButtonId, setCheckedScheduleButtonId] = useState('')
 
-  const [selectionRange, setSelectionRange] = useState<DateRangeProps[]>([
-    {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
-      key: 'selection',
-    },
-  ])
   const [unitys, setUnitys] = useState<BaseOption[]>([])
   const [specialties, setSpecialties] = useState<BaseOption[]>([])
   const [procedures, setProcedures] = useState<BaseOption[]>([])
@@ -127,14 +115,10 @@ function Appointment() {
     }
   }
 
-  const handleSelect = (ranges: RangeKeyDict) => {
-    const range: DateRangeProps = ranges.selection
-    setSelectionRange([range])
-  }
-
   useEffect(() => {
     fetchUnitys()
     setStatusBar(0)
+    setHeaderTitle('Agendamentos')
   }, [])
 
   useEffect(() => {
@@ -147,7 +131,6 @@ function Appointment() {
 
   return (
     <AppointmentContainer>
-      <h1>Agendamentos</h1>
       <form>
         <SelectInput
           label="Unidade"
@@ -177,22 +160,9 @@ function Appointment() {
             data={procedures}
           />
         ) : null}
-        {procedure?.id && (
-          <DateRangeContainer>
-            <DateRange
-              ranges={selectionRange}
-              locale={ptBR}
-              showDateDisplay={false}
-              weekdayDisplayFormat="EEEEEE"
-              onChange={handleSelect}
-              minDate={new Date()}
-            />
-          </DateRangeContainer>
-        )}
       </form>
 
       <Schedules
-        dateRange={selectionRange.find((item) => item.key === 'selection')}
         checkedScheduleButtonId={checkedScheduleButtonId}
         setCheckedScheduleButtonId={setCheckedScheduleButtonId}
       />
