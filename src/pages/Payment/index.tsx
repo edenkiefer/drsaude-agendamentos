@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { Hospital, PixLogo } from '@phosphor-icons/react'
+import { CreditCard } from 'phosphor-react'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -6,7 +8,12 @@ import { createNewAppointment } from '../../api/services/appointmentService'
 import { Input } from '../../components/Input'
 import { SelectInput } from '../../components/SelectInput'
 import { AppointmentsContext } from '../../contexts/AppointmentsContext'
-import { Container, PaymentContainer } from './styles'
+import {
+  Container,
+  PaymentContainer,
+  PaymentTypeButton,
+  PaymentTypesContainer,
+} from './styles'
 
 export function Payment() {
   const {
@@ -19,11 +26,14 @@ export function Payment() {
     price,
     setStatusBar,
     setHeaderTitle,
+    setPrice,
   } = useContext(AppointmentsContext)
 
   const navigate = useNavigate()
 
-  const [paymentType, setPaymentType] = useState('3')
+  const [paymentType, setPaymentType] = useState('')
+
+  const [originalPrice, setOriginalPrice] = useState(0)
 
   const [cardNumber, setCardNumber] = useState('')
   const [expiryDate, setExpiryDate] = useState('')
@@ -33,11 +43,8 @@ export function Payment() {
   useEffect(() => {
     setStatusBar(3)
     setHeaderTitle('Pagamento')
+    setOriginalPrice(price || 0)
   }, [])
-
-  const handlePaymentTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPaymentType(e.target.value)
-  }
 
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, '')
@@ -94,32 +101,55 @@ export function Payment() {
   return (
     <Container>
       <form onSubmit={handleCreateAppointment}>
-        <SelectInput
-          label="Forma de pagamento"
-          id="paymentType"
-          name="paymentType"
-          value={paymentType}
-          onChange={handlePaymentTypeChange}
-          data={[
-            {
-              id: '2',
-              value: 'Cartão de Crédito',
-            },
-            {
-              id: '3',
-              value: 'Na unidade',
-            },
-          ]}
-        />
+        <PaymentTypesContainer>
+          <PaymentTypeButton
+            type="button"
+            isSelected={paymentType !== '' && paymentType === '1'}
+            onClick={() => setPaymentType('1')}
+          >
+            <PixLogo size={48} />
+            PIX
+          </PaymentTypeButton>
+          <PaymentTypeButton
+            type="button"
+            isSelected={paymentType !== '' && paymentType === '2'}
+            onClick={() => setPaymentType('2')}
+          >
+            <CreditCard size={48} />
+            Cartão
+          </PaymentTypeButton>
+          <PaymentTypeButton
+            type="button"
+            isSelected={paymentType !== '' && paymentType === '3'}
+            onClick={() => setPaymentType('3')}
+          >
+            <Hospital size={48} />
+            Na unidade
+          </PaymentTypeButton>
+        </PaymentTypesContainer>
         {paymentType !== '0' && (
-          <p>
-            O valor pelo procedimento {procedure?.value} é de{' '}
-            {price &&
-              (price / 100).toLocaleString('pt-BR', {
-                style: 'currency',
-                currency: 'BRL',
-              })}
-          </p>
+          <>
+            <p>
+              O valor pelo procedimento {procedure?.value} é de{' '}
+              <strong>
+                {price &&
+                  ((originalPrice / 100) * 1.2).toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}{' '}
+              </strong>
+              em até 12x sem juros (crédito, débito ou pix) <strong>ou</strong>{' '}
+              de{' '}
+              <strong>
+                {price &&
+                  (originalPrice / 100).toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}{' '}
+              </strong>
+              (desconto para pagamento em dinheiro somente na unidade).
+            </p>
+          </>
         )}
         {paymentType === '1' ? <PaymentContainer>PIX</PaymentContainer> : null}
         {paymentType === '2' ? (
@@ -157,28 +187,31 @@ export function Payment() {
               />
             </div>
             <Input
-              label="João Silva"
+              label="Nome Completo"
               type="text"
               id="cardName"
               name="cardName"
-              placeholder="Nome completo"
+              placeholder="João Silva"
               value={cardName}
               onChange={handleCardNameChange}
             />
-            <SelectInput
-              label="Número de parcelas"
-              data={[
-                {
-                  id: '0',
-                  value: '1x de R$120,00',
-                },
-              ]}
-            />
-          </PaymentContainer>
-        ) : null}
-        {paymentType === '3' ? (
-          <PaymentContainer>
-            O pagamento será realizado na unidade.
+            {price && (
+              <SelectInput
+                label="Número de parcelas"
+                data={[
+                  {
+                    id: '0',
+                    value: `1x de R$ ${(
+                      (originalPrice / 100) *
+                      1.2
+                    ).toLocaleString('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })}`,
+                  },
+                ]}
+              />
+            )}
           </PaymentContainer>
         ) : null}
         {paymentType !== '0' ? <button>Realizar agendamento</button> : null}

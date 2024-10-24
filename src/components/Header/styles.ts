@@ -1,12 +1,14 @@
 import styled from 'styled-components'
 
 export const HeaderContainer = styled.header`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
   align-items: center;
-  padding: 1rem 2rem;
+  justify-content: space-between;
 
   width: 100%;
+  max-width: 920px;
+  margin: 0 auto 0;
+  padding: 1rem;
 
   button {
     background: none;
@@ -16,6 +18,8 @@ export const HeaderContainer = styled.header`
     justify-content: center;
     align-items: center;
     ${(props) => props.theme.mixins.textL}
+    font-weight: 600;
+    color: ${(props) => props.theme.colors['gray-600']};
   }
 
   a {
@@ -39,13 +43,17 @@ export const HeaderContainer = styled.header`
   }
 
   div.button {
-    justify-content: flex-start;
-    padding-left: 1rem;
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   div.sidebar {
-    justify-content: flex-end;
-    padding-right: 1rem;
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `
 
@@ -62,7 +70,7 @@ export const Sidebar = styled.div<SidebarProps>`
   position: fixed;
   top: 0;
   right: 0;
-  display: ${(props) => (props.isOpen ? 'block' : 'none')};
+  display: ${(props) => (props.open ? 'block' : 'none')};
 
   button {
     background: none;

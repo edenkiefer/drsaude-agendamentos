@@ -34,21 +34,3 @@ export const AppContainer = styled.div`
     margin-bottom: 1rem;
   }
 `
-
-export const BackButton = styled.button`
-  position: absolute;
-  display: none;
-  margin-left: -4rem;
-
-  color: ${(props) => props.theme.colors['gray-600']};
-
-  background: none;
-  border: none;
-  cursor: pointer;
-
-  @media (min-width: 992px) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-`

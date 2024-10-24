@@ -23,11 +23,18 @@ export interface Appointment {
 export interface PatientData {
   id: string
   name: string
-  cpf: string
   dateOfBirth: string
-  gender?: 'M' | 'F'
+  cpf: string
+  rg?: string
+  gender?: string
   email?: string
   cellPhone?: string
+  address?: string
+  number?: string
+  neighborhood?: string
+  city?: string
+  state?: string
+  cep?: string
 }
 
 export interface ProfessionalData {

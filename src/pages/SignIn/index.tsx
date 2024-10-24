@@ -8,7 +8,7 @@ import { AppointmentsContext } from '../../contexts/AppointmentsContext'
 import { SignInContainer } from './styles'
 
 export function SignIn() {
-  const { setStatusBar, setPatient, setHeaderTitle } =
+  const { procedure, setStatusBar, setPatient, setHeaderTitle } =
     useContext(AppointmentsContext)
   const navigate = useNavigate()
 
@@ -51,7 +51,12 @@ export function SignIn() {
     const patient = await signIn(cpf, birthDate)
     if (patient.id !== '') {
       setPatient(patient)
-      navigate('/confirmation')
+
+      if (procedure) {
+        navigate('/confirmation')
+      } else {
+        navigate('/patient')
+      }
     } else {
       alert(
         'CPF ou Data de nascimento informados estão incorretos ou não estão presentes em nosso banco de dados',
@@ -68,10 +73,10 @@ export function SignIn() {
   }, [setPatient])
 
   useEffect(() => {
-    setStatusBar(1)
+    setStatusBar(procedure ? 1 : -1)
     setHeaderTitle('Login')
     fetchPatient()
-  }, [setStatusBar, fetchPatient, setHeaderTitle])
+  }, [setStatusBar, fetchPatient, setHeaderTitle, procedure])
 
   return (
     <>

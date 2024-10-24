@@ -98,7 +98,10 @@ function Appointment() {
         value: selectedSpecialtie.text,
       })
       setCheckedScheduleButtonId('')
-      fetchProcedures()
+      setProcedure({
+        id: '0',
+        value: 'Selecione um procedimento',
+      })
     }
   }
 

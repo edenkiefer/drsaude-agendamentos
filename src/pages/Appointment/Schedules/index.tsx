@@ -18,11 +18,17 @@ export interface DateRangeProps {
 interface SchedulesProps {
   checkedScheduleButtonId: string
   setCheckedScheduleButtonId: (id: string) => void
+  professionalId?: string
+  unityId?: string
+  procedureId?: string
 }
 
 function Schedules({
   checkedScheduleButtonId,
   setCheckedScheduleButtonId,
+  professionalId,
+  unityId,
+  procedureId,
 }: SchedulesProps) {
   const { unity, specialtie, procedure } = useContext(AppointmentsContext)
 
@@ -31,6 +37,29 @@ function Schedules({
 
   const fetchSchedulesData = useCallback(
     async (startDate: Date, endDate: Date) => {
+      if (
+        professionalId !== undefined &&
+        unityId !== undefined &&
+        procedureId !== undefined
+      ) {
+        const formatedStartDate = format(startDate, 'dd-MM-yyyy', {
+          locale: ptBR,
+        })
+        const formatedEndDate = format(endDate, 'dd-MM-yyyy', {
+          locale: ptBR,
+        })
+
+        const schedulesData = await getSchedules(
+          unityId,
+          procedureId,
+          formatedStartDate,
+          formatedEndDate,
+          professionalId,
+        )
+        setSchedules(schedulesData)
+        return
+      }
+
       if (
         unity &&
         unity?.id !== '' &&
@@ -72,9 +101,8 @@ function Schedules({
 
   return (
     <>
-      {schedules && schedules.length > 0 ? (
+      {procedure?.id !== '0' && schedules && schedules.length > 0 ? (
         <SchedulesContainer>
-          <h1>Dias e Horários</h1>
           {schedules.map((schedule) => {
             return (
               <DateContainer key={schedule.date}>
@@ -97,7 +125,7 @@ function Schedules({
                       />
                     )
                   }
-                  return null
+                  return 'Desculpe não possúimos horários para o procedimento selecionado'
                 })}
               </DateContainer>
             )

@@ -10,6 +10,9 @@ export function AppointmentCompleted() {
   const {
     setStatusBar,
     setHeaderTitle,
+    setProcedure,
+    setSpecialtie,
+    setUnity,
     professionalId,
     hour,
     date,
@@ -20,7 +23,19 @@ export function AppointmentCompleted() {
   useEffect(() => {
     setStatusBar(4)
     setHeaderTitle('Agendamento concluído')
-  }, [setStatusBar, setHeaderTitle])
+    setProcedure({
+      id: '',
+      value: '',
+    })
+    setSpecialtie({
+      id: '',
+      value: '',
+    })
+    setUnity({
+      id: '',
+      value: '',
+    })
+  }, [])
   return (
     <AppointmentCompletedContainer>
       <p>O seu agendamento foi realizado, o seu médico(a) será:</p>

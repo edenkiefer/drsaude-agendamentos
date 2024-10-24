@@ -31,7 +31,7 @@ export const ContinueButtonContainer = styled.div`
   bottom: 0;
 
   width: 100%;
-  max-width: 720px;
+  max-width: 900px;
 
   padding: 0.5rem;
 

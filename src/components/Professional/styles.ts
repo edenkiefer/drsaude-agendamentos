@@ -9,7 +9,7 @@ export const ProfessionalContainer = styled.div`
   gap: 0.5rem;
 
   background: white;
-  border: 1px solid ${(props) => props.theme.colors['gray-400']};
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   border-radius: 6px;
 
   @media (min-width: 992px) {

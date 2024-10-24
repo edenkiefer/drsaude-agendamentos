@@ -6,6 +6,7 @@ export const defaultTheme = {
     yellow: '#FFCC69',
     'yellow-light': '#FFD686',
 
+    'red-400': '#c40808',
     'red-700': '#880808',
 
     'blue-300': '#215A8D',
